@@ -25,35 +25,38 @@ int main()
 	Time delayT1(0, 15, 0);
 	Time delayT2(0, 5, 0);
 	TrafficLight  LightT1(delayT1, T1Name);
-	TrafficLight  LightT2(delayT2, T2Name, LightT1);		// event (b) completed
+	TrafficLight  LightT2(delayT2, T2Name, LightT1);
+	cout << &LightT1 << endl;
+	cout << &LightT2 << endl;                                                               // event (b) completed
 
 
 	/* (c)-(f) begin the simulation with 4 car crossings: */
-	LightT1.carWantsToCross();								// event (c) completed
+	/*LightT1.carWantsToCross();								// event (c) completed
 	LightT2.carWantsToCross();								// event (d) completed
 	LightT1.carWantsToCross();								// event (e) completed
-	LightT2.carWantsToCross();								// event (f) completed
+	LightT2.carWantsToCross();*/								// event (f) completed
 
 
 	/* (g) create another pair of traffic lights with extra long delays of
 	 6hrs, 15mins, 44secs and 14hrs, 5mins, 57secs respectively:                 */
-	cout << "\nA new pair T3 and T4 of (very slow!) collaborating lights is now set up:\n";
+	/*cout << "\nA new pair T3 and T4 of (very slow!) collaborating lights is now set up:\n";
 	char  T3Name[]="T3 (North South)";
 	char  T4Name[]="T4 (East West)";
 	Time delayT3(6, 15, 44);
 	Time delayT4(14, 5, 57);
 	TrafficLight  LightT3(delayT3, T3Name);
-	TrafficLight  LightT4(delayT4, T4Name, LightT3);		// event (g) completed
+	TrafficLight  LightT4(delayT4, T4Name, LightT3);*/		// event (g) completed
 
 
 	/* (h)-(m) continue the simulation with 6 more car crossings:             */
-	LightT3.carWantsToCross();								// event (h) completed
+	/*LightT3.carWantsToCross();								// event (h) completed
 	LightT3.carWantsToCross();								// event (i) completed
 	LightT4.carWantsToCross();								// event (j) completed
 	LightT4.carWantsToCross();								// event (k) completed
 	LightT3.carWantsToCross();								// event (l) completed
-	LightT4.carWantsToCross();								// event (m) completed
+	LightT4.carWantsToCross();*/								// event (m) completed
 
+	
 	cout << "\n===================================\n"
 	     << "Roads close forever in Sleepy Town.\n"
 	     << "===================================\n";

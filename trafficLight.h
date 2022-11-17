@@ -13,13 +13,17 @@ class TrafficLight {
 	
 		TrafficLight(Time,char*);
 		TrafficLight(Time,char*,TrafficLight&); 
-		 
 		void carWantsToCross();
 		static void setTheTime(Time&);
     	
      	friend std::ostream& operator << (std::ostream&, TrafficLight*);
 
 	private:
+
+  char* name;
+  Time delay;
+  TrafficLight* correspondingLight;
+  static Time globalClock;
 
                 /* add members and operations to complete the class yourself */
 	
