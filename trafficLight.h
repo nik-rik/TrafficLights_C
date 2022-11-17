@@ -7,6 +7,8 @@
 
 /*********************** Class TrafficLight ***************************/
 
+enum Colour {RED, YELLOW, GREEN};
+
 class TrafficLight {
 
 	public:
@@ -14,16 +16,21 @@ class TrafficLight {
 		TrafficLight(Time,char*);
 		TrafficLight(Time,char*,TrafficLight&); 
 		void carWantsToCross();
-		static void setTheTime(Time&);
+  static void setTheTime(Time&);
+  void lightChange(Colour, TrafficLight&);
+  void requestLightChange(Colour, TrafficLight&);
+  const Colour get_colour() const;
+		
     	
      	friend std::ostream& operator << (std::ostream&, TrafficLight*);
-
+     	friend std::ostream& operator << (std::ostream&, Colour);
 	private:
 
   char* name;
   Time delay;
   TrafficLight* correspondingLight;
   static Time globalClock;
+  Colour lightColour;
 
                 /* add members and operations to complete the class yourself */
 	

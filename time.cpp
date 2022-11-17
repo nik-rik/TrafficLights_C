@@ -28,7 +28,7 @@ void Time::add(Time& anotherTime){
   int newSecs;
     
   newSecs = (theSecs + anotherTime.theSecs) % 60;
-  newMins = (theMins + anotherTime.theMins + ((theSecs + anotherTime.theSecs)/60)) & 60;
+  newMins = (theMins + anotherTime.theMins + ((theSecs + anotherTime.theSecs)/60)) % 60;
   newHour = (theHour + anotherTime.theHour + (theMins + anotherTime.theMins + (theSecs + anotherTime.theSecs) / 60) / 60) % 24;
 
   theSecs = newSecs;

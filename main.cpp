@@ -25,16 +25,14 @@ int main()
 	Time delayT1(0, 15, 0);
 	Time delayT2(0, 5, 0);
 	TrafficLight  LightT1(delayT1, T1Name);
-	TrafficLight  LightT2(delayT2, T2Name, LightT1);
-	cout << &LightT1 << endl;
-	cout << &LightT2 << endl;                                                               // event (b) completed
+	TrafficLight  LightT2(delayT2, T2Name, LightT1);                                                               // event (b) completed
 
 
 	/* (c)-(f) begin the simulation with 4 car crossings: */
-	/*LightT1.carWantsToCross();								// event (c) completed
+	LightT1.carWantsToCross();								// event (c) completed
 	LightT2.carWantsToCross();								// event (d) completed
 	LightT1.carWantsToCross();								// event (e) completed
-	LightT2.carWantsToCross();*/								// event (f) completed
+	LightT2.carWantsToCross();								// event (f) completed
 
 
 	/* (g) create another pair of traffic lights with extra long delays of
