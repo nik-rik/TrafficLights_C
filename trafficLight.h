@@ -23,7 +23,7 @@ class TrafficLight {
 		
     	
      	friend std::ostream& operator << (std::ostream&, TrafficLight*);
-     	friend std::ostream& operator << (std::ostream&, Colour);
+     	friend std::ostream& operator << (std::ostream&, enum Colour);
 	private:
 
   char* name;
