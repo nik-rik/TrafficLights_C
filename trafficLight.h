@@ -8,6 +8,7 @@
 /*********************** Class TrafficLight ***************************/
 
 enum Colour {RED, YELLOW, GREEN};
+std::ostream& operator<<(std::ostream&, const Colour&);
 
 class TrafficLight {
 
@@ -23,8 +24,9 @@ class TrafficLight {
   void basicSetup(Time&, char*, TrafficLight*);		
     	
      	friend std::ostream& operator << (std::ostream&, TrafficLight*);
-     	friend std::ostream& operator << (std::ostream&, enum Colour);
-	private:
+  //friend std::ostream& operator << (std::ostream&, enum Colour);
+
+private:
 
   char* name;
   Time delay;

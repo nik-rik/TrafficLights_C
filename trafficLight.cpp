@@ -3,7 +3,6 @@
 #include "trafficLight.h"
 #include "time.h"
 
-
 using namespace std;
 
 Time TrafficLight::globalClock(0,0,0);
@@ -52,24 +51,24 @@ void TrafficLight::lightChange(Colour targetColour, TrafficLight& trafficLight){
   cout << "   at " << globalClock << " " << trafficLight.name << " changes colour to " << trafficLight.lightColour << endl;
 }
 
-void TrafficLight::requestLightChange(Colour targetColour, TrafficLight& trafficLight){
+void TrafficLight::requestLightChange(Colour targetColour, TrafficLight& targetTrafficLight){
   if (targetColour == RED){
-    if (trafficLight.lightColour == GREEN){
-      lightChange(YELLOW, trafficLight);
-      requestLightChange(GREEN, *(trafficLight.correspondingLight));
+    if (targetTrafficLight.lightColour == GREEN){
+      lightChange(YELLOW, targetTrafficLight);
+      requestLightChange(GREEN, *(targetTrafficLight.correspondingLight));
     }
-    if (trafficLight.lightColour == YELLOW){
-      lightChange(RED, trafficLight);
-      requestLightChange(GREEN, *(trafficLight.correspondingLight));
+    if (targetTrafficLight.lightColour == YELLOW){
+      lightChange(RED, targetTrafficLight);
+      requestLightChange(GREEN, *(targetTrafficLight.correspondingLight));
     }
   }
-  if (targetColour == GREEN){
-    if (trafficLight.lightColour == RED){
-      lightChange(YELLOW, trafficLight);
-      lightChange(RED, *(trafficLight.correspondingLight));
+  else if (targetColour == GREEN){
+    if (targetTrafficLight.lightColour == RED){
+      lightChange(YELLOW, targetTrafficLight);
+      lightChange(RED, *(targetTrafficLight.correspondingLight));
     }
-    if (trafficLight.lightColour == YELLOW){
-      lightChange(GREEN, trafficLight);
+    if (targetTrafficLight.lightColour == YELLOW){
+      lightChange(GREEN, targetTrafficLight);
     }
   }
 }
@@ -80,8 +79,8 @@ std::ostream& operator << (std::ostream& out, TrafficLight* trafficLight){
   return out;
 }
 
-
-std::ostream& operator << (std::ostream& out, enum Colour lightColour){
+/*
+std::ostream& operator << (std::ostream& out, const Colour& lightColour){
   if (lightColour == RED)
     out << "red";
   if (lightColour == YELLOW)
@@ -91,3 +90,4 @@ std::ostream& operator << (std::ostream& out, enum Colour lightColour){
 
   return out;
 }
+*/
