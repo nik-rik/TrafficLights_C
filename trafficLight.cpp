@@ -9,17 +9,16 @@ using namespace std;
 Time TrafficLight::globalClock(0,0,0);
 
 TrafficLight::TrafficLight(Time _delay, char* _name){
-  name = new char[strlen(_name) + 1];
-  strcpy(name, _name);
-
-  lightColour = RED;
-
-  delay = _delay;
-
-  correspondingLight = NULL;
+  basicSetup(_delay, _name, NULL);
 }
 
 TrafficLight::TrafficLight(Time _delay, char* _name, TrafficLight& _correspondingLight){
+  basicSetup(_delay, _name, &_correspondingLight);
+
+  correspondingLight->correspondingLight = this;
+}
+
+void TrafficLight::basicSetup(Time& _delay, char* _name, TrafficLight* _correspondingLight){
   name = new char[strlen(_name) + 1];
   strcpy(name, _name);
 
@@ -27,10 +26,7 @@ TrafficLight::TrafficLight(Time _delay, char* _name, TrafficLight& _correspondin
 
   delay = _delay;
 
-  correspondingLight = &_correspondingLight;
-
-  correspondingLight->correspondingLight = this;
-  
+  correspondingLight = _correspondingLight;
 }
 
 void TrafficLight::setTheTime(Time& _globalClock){

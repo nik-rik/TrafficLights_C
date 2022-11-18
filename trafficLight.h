@@ -20,7 +20,7 @@ class TrafficLight {
   void lightChange(Colour, TrafficLight&);
   void requestLightChange(Colour, TrafficLight&);
   const Colour get_colour() const;
-		
+  void basicSetup(Time&, char*, TrafficLight*);		
     	
      	friend std::ostream& operator << (std::ostream&, TrafficLight*);
      	friend std::ostream& operator << (std::ostream&, enum Colour);
