@@ -33,7 +33,7 @@ void TrafficLight::setTheTime(Time& _globalClock){
 }
 
 void TrafficLight::carWantsToCross(){
-  cout << "\n***at " << globalClock << " a car wants to cross light " << name << ", with colour: " << lightColour << endl;
+  cout << "\n*** at " << globalClock << " a car wants to cross light " << name << ", with colour: " << lightColour << endl;
   
   if (lightColour == RED){
     if (correspondingLight->lightColour == GREEN)
@@ -48,7 +48,7 @@ void TrafficLight::carWantsToCross(){
 void TrafficLight::lightChange(Colour targetColour){
   globalClock.add(delay);
   lightColour = targetColour;
-  cout << "   at " << globalClock << " " << name << " changes colour to " << lightColour << endl;
+  cout << "    at " << globalClock << " " << name << " changes colour to " << lightColour << endl;
 }
 
 void TrafficLight::requestLightChange(Colour targetColour){
