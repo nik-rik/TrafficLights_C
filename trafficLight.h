@@ -8,23 +8,23 @@
 /*********************** Class TrafficLight ***************************/
 
 enum Colour {RED, YELLOW, GREEN};
-std::ostream& operator<<(std::ostream&, const Colour&);
+std::ostream& operator<<(std::ostream&, Colour);
 
 class TrafficLight {
 
-	public:
+public:
 	
-		TrafficLight(Time,char*);
-		TrafficLight(Time,char*,TrafficLight&); 
-		void carWantsToCross();
+  TrafficLight(Time,char*);
+  TrafficLight(Time,char*,TrafficLight&); 
+  void carWantsToCross();
   static void setTheTime(Time&);
-  void lightChange(Colour, TrafficLight&);
-  void requestLightChange(Colour, TrafficLight&);
+  void lightChange(Colour);
+  void requestLightChange(Colour);
   const Colour get_colour() const;
   void basicSetup(Time&, char*, TrafficLight*);		
     	
-     	friend std::ostream& operator << (std::ostream&, TrafficLight*);
-  //friend std::ostream& operator << (std::ostream&, enum Colour);
+  friend std::ostream& operator << (std::ostream&, TrafficLight*);
+
 
 private:
 
@@ -34,7 +34,7 @@ private:
   static Time globalClock;
   Colour lightColour;
 
-                /* add members and operations to complete the class yourself */
+                /* add members and operations to complete the classi yourself */
 	
 };
 

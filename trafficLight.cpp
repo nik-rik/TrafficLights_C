@@ -37,38 +37,38 @@ void TrafficLight::carWantsToCross(){
   
   if (lightColour == RED){
     if (correspondingLight->lightColour == GREEN)
-      requestLightChange(RED, *correspondingLight);
+      correspondingLight->requestLightChange(RED);
     else if (correspondingLight->lightColour == RED){
-      lightChange(YELLOW, *this);
-      lightChange(GREEN, *this);
+      lightChange(YELLOW);
+      lightChange(GREEN);
     }
   }     
 }
 
-void TrafficLight::lightChange(Colour targetColour, TrafficLight& trafficLight){
-  globalClock.add(trafficLight.delay);
-  trafficLight.lightColour = targetColour;
-  cout << "   at " << globalClock << " " << trafficLight.name << " changes colour to " << trafficLight.lightColour << endl;
+void TrafficLight::lightChange(Colour targetColour){
+  globalClock.add(delay);
+  lightColour = targetColour;
+  cout << "   at " << globalClock << " " << name << " changes colour to " << lightColour << endl;
 }
 
-void TrafficLight::requestLightChange(Colour targetColour, TrafficLight& targetTrafficLight){
+void TrafficLight::requestLightChange(Colour targetColour){
   if (targetColour == RED){
-    if (targetTrafficLight.lightColour == GREEN){
-      lightChange(YELLOW, targetTrafficLight);
-      requestLightChange(GREEN, *(targetTrafficLight.correspondingLight));
+    if (lightColour == GREEN){
+      lightChange(YELLOW);
+      correspondingLight->requestLightChange(GREEN);
     }
-    if (targetTrafficLight.lightColour == YELLOW){
-      lightChange(RED, targetTrafficLight);
-      requestLightChange(GREEN, *(targetTrafficLight.correspondingLight));
+    if (lightColour == YELLOW){
+      lightChange(RED);
+      correspondingLight->requestLightChange(GREEN);
     }
   }
   else if (targetColour == GREEN){
-    if (targetTrafficLight.lightColour == RED){
-      lightChange(YELLOW, targetTrafficLight);
-      lightChange(RED, *(targetTrafficLight.correspondingLight));
+    if (lightColour == RED){
+      lightChange(YELLOW);
+      correspondingLight->requestLightChange(RED);
     }
-    if (targetTrafficLight.lightColour == YELLOW){
-      lightChange(GREEN, targetTrafficLight);
+    if (lightColour == YELLOW){
+      lightChange(GREEN);
     }
   }
 }
@@ -79,8 +79,8 @@ std::ostream& operator << (std::ostream& out, TrafficLight* trafficLight){
   return out;
 }
 
-/*
-std::ostream& operator << (std::ostream& out, const Colour& lightColour){
+
+std::ostream& operator << (std::ostream& out, const Colour lightColour){
   if (lightColour == RED)
     out << "red";
   if (lightColour == YELLOW)
@@ -90,4 +90,4 @@ std::ostream& operator << (std::ostream& out, const Colour& lightColour){
 
   return out;
 }
-*/
+
