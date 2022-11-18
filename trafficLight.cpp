@@ -33,15 +33,6 @@ TrafficLight::TrafficLight(Time _delay, char* _name, TrafficLight& _correspondin
   
 }
 
-void TrafficLight::basicSetup(Time _delay, char* _name){
-  name = new char[strlen(_name) + 1];
-  strcpy(name, _name);
-
-  lightColour = RED;
-
-  delay = _delay;
-}
-
 void TrafficLight::setTheTime(Time& _globalClock){
   globalClock = _globalClock;
 }
