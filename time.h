@@ -32,7 +32,7 @@ class Time {
 		int theMins;
 		int theSecs;	
 		
-		void init(int hours, int minutes, int seconds);
+	
 };
 
 #endif

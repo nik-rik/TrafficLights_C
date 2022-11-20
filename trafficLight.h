@@ -7,8 +7,8 @@
 
 /*********************** Class TrafficLight ***************************/
 
-enum Colour {RED, YELLOW, GREEN};
-std::ostream& operator<<(std::ostream&, Colour);
+enum Colour {RED, YELLOW, GREEN}; // Used to restict the colour of the traffic lights to RED, YELLOW and GREEN
+std::ostream& operator<<(std::ostream&, Colour); // Overloads the << operator for Colour
 
 class TrafficLight {
 
@@ -17,24 +17,21 @@ public:
   TrafficLight(Time,char*);
   TrafficLight(Time,char*,TrafficLight&); 
   void carWantsToCross();
-  static void setTheTime(Time&);
-  void lightChange(Colour);
-  void requestLightChange(Colour);
-  const Colour get_colour() const;
-  void basicSetup(Time&, char*, TrafficLight*);		
+  static void setTheTime(Time&); // Sets the time of the Global Clock
+  void lightChange(const Colour); // Changes a colour of a traffic light
+  void requestLightChange(const Colour); // Requests a traffic light to be change colour
+  void basicSetup(const Time&, const char*, TrafficLight*);	// Used in the traffic light constuctors for simplification	
     	
-  friend std::ostream& operator << (std::ostream&, TrafficLight*);
+  friend std::ostream& operator << (std::ostream&, TrafficLight*); // Overloads the << operator for TrafficLight *
 
 
 private:
 
-  char* name;
-  Time delay;
-  TrafficLight* correspondingLight;
-  static Time globalClock;
-  Colour lightColour;
-
-                /* add members and operations to complete the classi yourself */
+  char* name; // Name of the traffic light
+  Time delay; // Delay of the traffic light
+  TrafficLight* correspondingLight; // Pointer to the other traffic light in the pair
+  static Time globalClock; // Global Clock
+  Colour lightColour; // Colour of the traffic light
 	
 };
 

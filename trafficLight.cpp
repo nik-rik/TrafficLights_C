@@ -5,21 +5,25 @@
 
 using namespace std;
 
-Time TrafficLight::globalClock(0,0,0);
+Time TrafficLight::globalClock(0,0,0); // Initialises the global clock to 0:0:0
 
+/* Constructor for first traffic light in pair */
 TrafficLight::TrafficLight(Time _delay, char* _name){
-  basicSetup(_delay, _name, NULL);
+  basicSetup(_delay, _name, NULL); // NULL pointer to corresponding light because it doesn't exist yet
 }
 
+/* Constructor for second traffic light in pair */
 TrafficLight::TrafficLight(Time _delay, char* _name, TrafficLight& _correspondingLight){
   basicSetup(_delay, _name, &_correspondingLight);
 
-  correspondingLight->correspondingLight = this;
+  correspondingLight->correspondingLight = this; // Changes other traffic light in pair's corresponding light
+                                                 // pointer from NULL to this
 }
 
-void TrafficLight::basicSetup(Time& _delay, char* _name, TrafficLight* _correspondingLight){
-  name = new char[strlen(_name) + 1];
-  strcpy(name, _name);
+/* Function to initialise name, lightColour, delay and correspondingLight variables in constructors */
+void TrafficLight::basicSetup(const Time& _delay, const char* _name, TrafficLight* _correspondingLight){
+  name = new char[strlen(_name) + 1]; // Creates a new character array on the heap
+  strcpy(name, _name); // Copies _name into the name variable
 
   lightColour = RED;
 
@@ -28,30 +32,44 @@ void TrafficLight::basicSetup(Time& _delay, char* _name, TrafficLight* _correspo
   correspondingLight = _correspondingLight;
 }
 
+/* Function to set the Global CLock to a specific time */
 void TrafficLight::setTheTime(Time& _globalClock){
   globalClock = _globalClock;
 }
 
+/* Function to signal that a car wants to cross */
 void TrafficLight::carWantsToCross(){
   cout << "\n***  at " << globalClock << " a car wants to cross light " << name << ", with colour: " << lightColour << endl;
-  
-  if (lightColour == RED){
-    if (correspondingLight->lightColour == GREEN)
-      correspondingLight->requestLightChange(RED);
-    else if (correspondingLight->lightColour == RED){
-      lightChange(YELLOW);
+
+  /* Switch for what lights should do if a car wants to cross, depending on colour of traffic light */
+  switch(lightColour){
+
+  case RED:
+    if (correspondingLight->lightColour == GREEN)     // If the other light is Green then we request it to turn red, and the
+      correspondingLight->requestLightChange(RED);    // this light will automatically turn Green after, because the lights
+                                                      // always work in tandem (i.e. when one is green the other should switch to red)
+
+    else if (correspondingLight->lightColour == RED){ // However, we need to include this because the lights are both initialised
+      lightChange(YELLOW);                            // to be red at the outset so are not yet operating in tandem.
       lightChange(GREEN);
     }
-  }     
+    break;
+    
+  /* According to the output, nothing should happen if the light is already green or yellow */
+  case YELLOW:
+    break;
+
+  case GREEN:
+    break;
+  }
 }
 
-void TrafficLight::lightChange(Colour targetColour){
-  globalClock.add(delay);
-  lightColour = targetColour;
-  cout << "     at " << globalClock << " " << name << " changes colour to " << lightColour << endl;
-}
+/* Function that requests a light to change colour */
+void TrafficLight::requestLightChange(const Colour targetColour){
 
-void TrafficLight::requestLightChange(Colour targetColour){
+  /* Using recursion, we change the colour of the current light from Green to Yellow to Red
+     and the corresponding light from Red to Yellow to Green (and vice versa) in the correct order */
+  
   if (targetColour == RED){
     if (lightColour == GREEN){
       lightChange(YELLOW);
@@ -67,11 +85,20 @@ void TrafficLight::requestLightChange(Colour targetColour){
       lightChange(YELLOW);
       correspondingLight->requestLightChange(RED);
     }
-    if (lightColour == YELLOW){
+    if (lightColour == YELLOW){ // Base case
       lightChange(GREEN);
     }
   }
 }
+
+
+/* Function that waits the delay, changes the colour of the light and outputs that the light has changed colour */
+void TrafficLight::lightChange(const Colour targetColour){
+  globalClock.add(delay);
+  lightColour = targetColour;
+  cout << "     at " << globalClock << " " << name << " changes colour to " << lightColour << endl;
+}
+
 
 std::ostream& operator << (std::ostream& out, TrafficLight* trafficLight){
 	out << "Name: " << trafficLight->name << "\nColour: \nDelay: " << trafficLight->delay << "\nGlobal Clock: " << trafficLight->globalClock << "\nColour: " << trafficLight->lightColour << "\ncorrespondingLight: " << trafficLight->correspondingLight << endl;
@@ -79,14 +106,21 @@ std::ostream& operator << (std::ostream& out, TrafficLight* trafficLight){
   return out;
 }
 
-
+/* Overrides the << operator for Colour so that it outputs colour values correctly */
 std::ostream& operator << (std::ostream& out, const Colour lightColour){
-  if (lightColour == RED)
+  switch(lightColour){
+  case RED:
     out << "red";
-  if (lightColour == YELLOW)
+    break;
+
+  case YELLOW:
     out << "yellow";
-  if (lightColour == GREEN)
+    break;
+
+  case GREEN:
     out << "green";
+    break;
+  }
 
   return out;
 }
