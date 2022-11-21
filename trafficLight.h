@@ -15,13 +15,10 @@ class TrafficLight {
 public:
 	
   TrafficLight(Time,char*);
-  TrafficLight(Time,char*,TrafficLight&); 
+  TrafficLight(Time,char*,TrafficLight&);
+  ~TrafficLight();
   void carWantsToCross();
-  static void setTheTime(Time&); // Sets the time of the Global Clock
-  void lightChange(const Colour); // Changes a colour of a traffic light
-  void requestLightChange(const Colour); // Requests a traffic light to be change colour
-  void basicSetup(const Time&, const char*, TrafficLight*);	// Used in the traffic light constuctors for simplification	
-    	
+  static void setTheTime(Time&); // Sets the time of the Global Clock	    	
 
 private:
 
@@ -30,7 +27,11 @@ private:
   TrafficLight* correspondingLight; // Pointer to the other traffic light in the pair
   static Time globalClock; // Global Clock
   Colour lightColour; // Colour of the traffic light
-	
+
+  
+  void lightChange(const Colour); // Changes a colour of a traffic light
+  void requestLightChange(const Colour); // Requests a traffic light to be change colour
+  void basicSetup(const Time&, const char*, TrafficLight*);	// Used in the traffic light constuctors for simplification
 };
 
 #endif

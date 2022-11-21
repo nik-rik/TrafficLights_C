@@ -7,18 +7,26 @@ using namespace std;
 
 Time TrafficLight::globalClock(0,0,0); // Initialises the global clock to 0:0:0
 
+
 /* Constructor for first traffic light in pair */
 TrafficLight::TrafficLight(Time _delay, char* _name){
-  basicSetup(_delay, _name, NULL); // NULL pointer to corresponding light because it doesn't exist yet
+  basicSetup(_delay, _name, nullptr); // NULL pointer to corresponding light because it doesn't exist yet
 }
+
 
 /* Constructor for second traffic light in pair */
 TrafficLight::TrafficLight(Time _delay, char* _name, TrafficLight& _correspondingLight){
   basicSetup(_delay, _name, &_correspondingLight);
 
-  correspondingLight->correspondingLight = this; // Changes other traffic light in pair's corresponding light
-                                                 // pointer from NULL to this
+  if (correspondingLight->correspondingLight == nullptr)
+    correspondingLight->correspondingLight = this; // Changes other traffic light in pair's corresponding light
+                                                   // pointer from NULL to the this pointer only if the corresponding light
+                                                   // is not already paired
+  else
+    correspondingLight = nullptr;                  // If the other traffic light already has a pair, the current
+                                                   // traffic light's corresponding light is set to NULL
 }
+
 
 /* Function to initialise name, lightColour, delay and correspondingLight variables in constructors */
 void TrafficLight::basicSetup(const Time& _delay, const char* _name, TrafficLight* _correspondingLight){
@@ -32,15 +40,33 @@ void TrafficLight::basicSetup(const Time& _delay, const char* _name, TrafficLigh
   correspondingLight = _correspondingLight;
 }
 
+
+/* TrafficLight Destructor */
+TrafficLight::~TrafficLight(){
+  if (correspondingLight != nullptr)
+    correspondingLight->correspondingLight = nullptr;
+
+  delete (name);
+  
+}
+
+
 /* Function to set the Global Clock to a specific time */
 void TrafficLight::setTheTime(Time& _globalClock){
   globalClock = _globalClock;
 }
 
+
 /* Function to signal that a car wants to cross */
 void TrafficLight::carWantsToCross(){
   cout << "\n***  at " << globalClock << " a car wants to cross light " << name << ", with colour: " << lightColour << endl;
 
+  /* Changes light to green if there is no corresponding Light linked  */
+  if (correspondingLight == nullptr){
+      lightChange(YELLOW);
+      lightChange(GREEN);
+  }
+  
   /* Switch for what lights should do if a car wants to cross, depending on colour of traffic light */
   switch(lightColour){
 
@@ -49,9 +75,9 @@ void TrafficLight::carWantsToCross(){
       correspondingLight->requestLightChange(RED);    // this light will automatically turn Green after, because the lights
                                                       // always work in tandem (i.e. when one is green the other should switch to red)
 
-    else if (correspondingLight->lightColour == RED){ // However, we need to include this because the lights are both initialised
-      requestLightChange(GREEN);                            // to be red at the outset so are not yet operating in tandem.
-    }
+    else if (correspondingLight->lightColour == RED)  // However, we need to include this because the lights are both initialised
+      requestLightChange(GREEN);                      // to be red at the outset so are not yet operating in tandem.
+    
     break;
     
   /* According to the output, nothing should happen if the light is already green or yellow */
@@ -62,6 +88,7 @@ void TrafficLight::carWantsToCross(){
     break;
   }
 }
+
 
 /* Function that requests a light to change colour */
 void TrafficLight::requestLightChange(const Colour targetColour){

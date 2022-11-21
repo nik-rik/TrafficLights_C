@@ -25,7 +25,8 @@ int main()
 	Time delayT1(0, 15, 0);
 	Time delayT2(0, 5, 0);
 	TrafficLight  LightT1(delayT1, T1Name);
-	TrafficLight  LightT2(delayT2, T2Name, LightT1);                                                               // event (b) completed
+	TrafficLight  LightT2(delayT2, T2Name, LightT1);
+	
 
 
 	/* (c)-(f) begin the simulation with 4 car crossings: */
