@@ -46,7 +46,7 @@ TrafficLight::~TrafficLight(){
   if (correspondingLight != nullptr)
     correspondingLight->correspondingLight = nullptr;
 
-  delete (name);
+  delete [] name;
   
 }
 
@@ -94,7 +94,7 @@ void TrafficLight::carWantsToCross(){
 void TrafficLight::requestLightChange(const Colour targetColour){
 
   /* Using recursion, we change the colour of the current light from Green to Yellow to Red
-     and the corresponding light from Red to Yellow to Green (and vice versa) in the correct order */
+     and the corresponding light from Red to Yellow to Green (and vice versa)*/
   
   if (targetColour == RED){
     if (lightColour == GREEN){
