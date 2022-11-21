@@ -32,7 +32,7 @@ void TrafficLight::basicSetup(const Time& _delay, const char* _name, TrafficLigh
   correspondingLight = _correspondingLight;
 }
 
-/* Function to set the Global CLock to a specific time */
+/* Function to set the Global Clock to a specific time */
 void TrafficLight::setTheTime(Time& _globalClock){
   globalClock = _globalClock;
 }
@@ -50,8 +50,7 @@ void TrafficLight::carWantsToCross(){
                                                       // always work in tandem (i.e. when one is green the other should switch to red)
 
     else if (correspondingLight->lightColour == RED){ // However, we need to include this because the lights are both initialised
-      lightChange(YELLOW);                            // to be red at the outset so are not yet operating in tandem.
-      lightChange(GREEN);
+      requestLightChange(GREEN);                            // to be red at the outset so are not yet operating in tandem.
     }
     break;
     
@@ -99,12 +98,6 @@ void TrafficLight::lightChange(const Colour targetColour){
   cout << "     at " << globalClock << " " << name << " changes colour to " << lightColour << endl;
 }
 
-
-std::ostream& operator << (std::ostream& out, TrafficLight* trafficLight){
-	out << "Name: " << trafficLight->name << "\nColour: \nDelay: " << trafficLight->delay << "\nGlobal Clock: " << trafficLight->globalClock << "\nColour: " << trafficLight->lightColour << "\ncorrespondingLight: " << trafficLight->correspondingLight << endl;
-
-  return out;
-}
 
 /* Overrides the << operator for Colour so that it outputs colour values correctly */
 std::ostream& operator << (std::ostream& out, const Colour lightColour){

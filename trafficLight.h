@@ -22,8 +22,6 @@ public:
   void requestLightChange(const Colour); // Requests a traffic light to be change colour
   void basicSetup(const Time&, const char*, TrafficLight*);	// Used in the traffic light constuctors for simplification	
     	
-  friend std::ostream& operator << (std::ostream&, TrafficLight*); // Overloads the << operator for TrafficLight *
-
 
 private:
 
